@@ -142,7 +142,8 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
   width:clamp(210px,25vw,400px);opacity:0;
   transform:translate3d(26px,34px,0) rotate(1.2deg) scale(.98);
   transition:opacity .55s ease, transform .7s cubic-bezier(.2,.9,.2,1), width .4s ease;
-  filter:drop-shadow(0 24px 36px rgba(10,8,7,.55))}
+  filter:drop-shadow(0 24px 36px rgba(10,8,7,.55))
+         drop-shadow(0 0 2px rgba(255,248,234,.9)) drop-shadow(0 0 1px rgba(255,248,234,.9))}
 .him.on{opacity:1;transform:translate3d(0,0,0) rotate(.4deg) scale(1)}
 .him.speaking{filter:drop-shadow(0 26px 42px rgba(10,8,7,.6)) drop-shadow(0 0 26px rgba(233,185,63,.26))}
 .him-inner{position:relative}
@@ -157,8 +158,9 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .him-decal{position:absolute;inset:0;pointer-events:none}
 .him-decal svg{position:absolute;filter:drop-shadow(0 3px 8px rgba(0,0,0,.25))}
 /* 特写模式 */
-.him.zoom{right:50%;width:clamp(300px,46vw,680px);transform:translate3d(50%,0,0) scale(1);bottom:-6%}
+.him.zoom{right:50%;width:clamp(300px,40vw,540px);transform:translate3d(50%,0,0) scale(1);bottom:9vh}
 .him.zoom.on{transform:translate3d(50%,0,0) scale(1)}
+.him.zoom .him-tag{display:none}
 
 .decal-sweat{animation:sweatDrop 1.6s ease-in-out infinite}
 @keyframes sweatDrop{0%,100%{transform:translateY(0);opacity:.85}50%{transform:translateY(6px);opacity:1}}
@@ -190,7 +192,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
   min-height:clamp(88px,14vh,146px);overflow:hidden}
 .dlg-body::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
   background-image:radial-gradient(rgba(120,96,70,.10) 1px,transparent 1px);background-size:5px 5px}
-.dlg-text{margin:0;font-size:var(--dlg);line-height:1.85;letter-spacing:.03em;color:var(--ink);
+.dlg-text{margin:0;max-width:52em;font-size:var(--dlg);line-height:1.85;letter-spacing:.03em;color:var(--ink);
   font-family:var(--serif);white-space:pre-wrap;word-break:break-word;position:relative}
 .dlg-text.nar{color:var(--ink-2)}
 .dlg-text .em{color:var(--accent);font-weight:700}

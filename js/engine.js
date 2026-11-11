@@ -25,7 +25,7 @@
     sweat: '<svg width="42" height="52" viewBox="0 0 24 30" class="decal-sweat" style="left:2%;top:4%"><path d="M12 1c4 7 8 10.5 8 15.5A8 8 0 0 1 4 16.5C4 11.5 8 8 12 1z" fill="#8fd3f4" stroke="#3f8fb8" stroke-width="1.2"/></svg>',
     exclaim: '<svg width="34" height="46" viewBox="0 0 20 28" class="decal-shake" style="right:-4%;top:-2%"><path d="M10 2l2.6 16H7.4L10 2z" fill="#f0a13a"/><circle cx="10" cy="23" r="2.8" fill="#f0a13a"/></svg>',
     dots: '<svg width="58" height="24" viewBox="0 0 60 24" class="decal-dots" style="right:-2%;top:2%"><circle cx="10" cy="12" r="4" fill="#f6efe3"/><circle cx="30" cy="12" r="4" fill="#f6efe3"/><circle cx="50" cy="12" r="4" fill="#f6efe3"/></svg>',
-    blush: '<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style="opacity:.6"><defs><radialGradient id="bg1"><stop offset="0" stop-color="#ff8fa8" stop-opacity=".9"/><stop offset="1" stop-color="#ff8fa8" stop-opacity="0"/></radialGradient></defs><ellipse cx="35" cy="25" rx="10" ry="6" fill="url(#bg1)"/><ellipse cx="65" cy="25" rx="10" ry="6" fill="url(#bg1)"/></svg>',
+    blush: '<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style="opacity:.6"><defs><radialGradient id="bg1"><stop offset="0" stop-color="#ff8fa8" stop-opacity=".9"/><stop offset="1" stop-color="#ff8fa8" stop-opacity="0"/></radialGradient></defs><ellipse cx="31" cy="54" rx="11" ry="7" fill="url(#bg1)"/><ellipse cx="69" cy="54" rx="11" ry="7" fill="url(#bg1)"/></svg>',
     spark: '<svg width="70" height="70" viewBox="0 0 24 24" class="decal-heart" style="left:-8%;top:10%"><path d="M12 2l2 7 7 2-7 2-2 7-2-7-7-2 7-2z" fill="#ffe08a"/></svg>',
     anger: '<svg width="44" height="44" viewBox="0 0 24 24" class="decal-shake" style="right:-6%;top:0"><path d="M9 4c1.6 1.1 2.4 2.4 2.4 4.1M15 4c-1.6 1.1-2.4 2.4-2.4 4.1M4 9c1.4 1.4 3 2 4.8 2M20 9c-1.4 1.4-3 2-4.8 2" stroke="#e05a5a" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
     star: '<svg width="54" height="54" viewBox="0 0 24 24" class="decal-heart" style="right:-8%;top:8%"><circle cx="12" cy="12" r="9" fill="#ffe9a8" opacity=".9"/><path d="M12 6l1.6 4.4L18 12l-4.4 1.6L12 18l-1.6-4.4L6 12l4.4-1.6z" fill="#e08b2f"/></svg>',
@@ -150,7 +150,7 @@
     const h = $('#him');
     if (hide) { h.classList.remove('on'); S.himOn = false; return; }
     h.classList.add('on'); S.himOn = true;
-    h.classList.toggle('zoom', pose === 'face' || !!zoom);
+    if (pose) h.classList.toggle('zoom', pose === 'face' || !!zoom);
     const p = pose || S.pose;
     if (p && HIM[p]) {
       const img = $('#him-img');
@@ -228,7 +228,7 @@
     if (n.weather !== undefined) weather.set(n.weather);
     if (n.sfx && window.Sfx && Sfx[n.sfx]) Sfx[n.sfx]();
     if (n.h) setHim(n.h, n.decal);
-    if (n.decal) setHim(null, n.decal);
+    else if (n.decal) setHim(null, n.decal);
     if (n.hh) setHim(null, null, true);
     if (n.shake) shake();
     if (n.dim !== undefined) $('#stage').classList.toggle('dim', !!n.dim);
