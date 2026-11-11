@@ -362,7 +362,11 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
   .chars-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
 }
 @media (max-height:560px) and (orientation:landscape){
-  .him{width:clamp(150px,26vh,260px);right:clamp(10px,4vw,60px)}
+  .him{width:clamp(200px,46vh,340px);right:clamp(10px,7vw,80px)}
+  .him-tag{font-size:calc(var(--ui) * .72)}
+  .dialogue{padding-bottom:calc(env(safe-area-inset-bottom) + 8px)}
+  .love-chip{top:calc(env(safe-area-inset-top) + 56px);right:auto;left:14px;padding:3px 9px 3px 7px}
+  .lc-label{display:none}
   .dlg-body{min-height:96px;padding:14px 16px 12px}
   .dlg-text{font-size:calc(var(--dlg) * .88);line-height:1.7}
   .dlg-tools{top:-32px}

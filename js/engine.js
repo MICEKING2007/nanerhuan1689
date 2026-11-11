@@ -376,6 +376,7 @@
     const e = (STORY.endings || {})[id] || { title: id, text: '' };
     if (meta.endings.indexOf(id) < 0) meta.endings.push(id);
     meta.cleared = (meta.cleared || 0) + 1; saveMeta();
+    try { localStorage.removeItem(LS_AUTO); } catch (e) {}
     if (window.Music) Music.play(e.mood || 'ending');
     $('#end-title').textContent = e.title;
     $('#end-text').innerHTML = fmt(e.text || '');
@@ -398,6 +399,7 @@
     };
   }
   function restore(s) {
+    S.started = true;
     S.love = s.love || 0; S.flags = Object.assign({}, s.flags || {});
     S.history = (s.history || []).slice(); S.pose = s.pose || 'smile'; S.bg = null;
     $('#love-num').textContent = S.love;
