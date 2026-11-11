@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1a1512" />
+<title>南二环1689 · 保理恋爱物语</title>
+<meta name="description" content="保定理工学院（南二环1689号）的校园恋爱视觉小说：他坐在第七排靠窗，说话很轻，怕冷，喜欢甜食。你要不要，走过去一点。" />
+<link rel="icon" href="assets/ui/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ================= 标题 ================= -->
+  <section id="title" class="screen active">
+    <div class="title-bg">
+      <div class="tb-layer" id="tbA"></div>
+      <div class="tb-layer" id="tbB"></div>
+      <div class="tb-layer" id="tbC"></div>
+      <div class="tb-grade"></div>
+    </div>
+    <canvas id="title-snow" class="fx-canvas"></canvas>
+    <div class="title-inner">
+      <div class="title-badge">BAODING INSTITUTE OF TECHNOLOGY · 1689</div>
+      <h1 class="title-main"><span>南二环</span><em>1689</em></h1>
+      <div class="title-sub">保理 · 银杏恋爱物语</div>
+      <div class="title-tag">“艰苦朴素，求真务实。”——但我只想靠近你一点。</div>
+      <nav class="title-menu">
+        <button class="tbtn primary" id="btn-start">开 始 新 的 学 期</button>
+        <button class="tbtn" id="btn-continue">继 续 读 档</button>
+        <div class="trow">
+          <button class="tbtn small" id="btn-gallery">相 册</button>
+          <button class="tbtn small" id="btn-chars">人 物</button>
+          <button class="tbtn small" id="btn-settings">设 置</button>
+        </div>
+      </nav>
+      <div class="title-foot">
+        <span>保定理工学院 · 会计2412</span>
+        <span class="dot">·</span>
+        <span>建议戴上耳机</span>
+      </div>
+    </div>
+    <div class="title-strip"></div>
+  </section>
+
+  <!-- ================= 游戏 ================= -->
+  <section id="game" class="screen">
+    <div class="stage" id="stage">
+      <div class="bg-wrap">
+        <div class="bg-layer" id="bg-a"></div>
+        <div class="bg-layer" id="bg-b"></div>
+      </div>
+      <div class="bg-blur" id="bg-blur"></div>
+      <canvas id="fx" class="fx-canvas"></canvas>
+      <div class="stage-vignette"></div>
+      <div class="stage-grain"></div>
+
+      <header class="hud">
+        <div class="hud-left">
+          <div class="chapter-chip" id="chapter-chip">序章 · 南二环1689</div>
+          <div class="place-chip" id="place-chip">保定理工学院 · 南门</div>
+        </div>
+        <div class="hud-right">
+          <button class="icobtn" id="hud-log" title="对话记录">记</button>
+          <button class="icobtn" id="hud-auto" title="自动播放">自</button>
+          <button class="icobtn" id="hud-skip" title="快进">快</button>
+          <button class="icobtn" id="hud-save" title="存档 / 读档">档</button>
+          <button class="icobtn" id="hud-menu" title="菜单">☰</button>
+        </div>
+      </header>
+
+      <div class="love-chip" id="love-chip">
+        <span class="lc-heart">♥</span>
+        <span class="lc-num" id="love-num">0</span>
+        <span class="lc-label">心动</span>
+      </div>
+
+      <div class="chars" id="chars">
+        <figure class="him" id="him">
+          <div class="him-inner">
+            <img id="him-img" alt="他" />
+            <div class="him-glow"></div>
+            <div class="him-decal" id="him-decal"></div>
+          </div>
+          <figcaption class="him-tag"><span id="him-name">王子豪</span><i id="him-sub">会计2412</i></figcaption>
+        </figure>
+      </div>
+
+      <!-- 对话框 -->
+      <div class="dialogue" id="dialogue">
+        <div class="dlg-tape"></div>
+        <div class="dlg-name" id="dlg-name">他</div>
+        <div class="dlg-body">
+          <p class="dlg-text" id="dlg-text"></p>
+        </div>
+        <div class="dlg-next" id="dlg-next">▾</div>
+        <div class="dlg-tools">
+          <button id="tool-auto" class="mini">自动</button>
+          <button id="tool-log" class="mini">记录</button>
+          <button id="tool-skip" class="mini">快进</button>
+        </div>
+      </div>
+
+      <div class="choices" id="choices"></div>
+
+      <div class="cg-view" id="cg-view">
+        <div class="cg-paper">
+          <img id="cg-img" alt="CG" />
+          <div class="cg-cap" id="cg-cap"></div>
+        </div>
+      </div>
+
+      <div class="chapter-card" id="chapter-card">
+        <div class="cc-in">
+          <div class="cc-no" id="cc-no">第一章</div>
+          <h2 id="cc-title">六点半的早操</h2>
+          <div class="cc-line"></div>
+          <div class="cc-sub" id="cc-sub"></div>
+        </div>
+      </div>
+
+      <div class="aff-toast" id="aff-toast"></div>
+    </div>
+  </section>
+
+  <!-- ================= 命名 ================= -->
+  <section id="naming" class="screen">
+    <div class="name-card">
+      <div class="name-kicker">新生登记表 · 会计2412</div>
+      <h2>先把名字写上</h2>
+      <div class="name-row">
+        <label>你的名字</label>
+        <input id="in-you" maxlength="12" placeholder="你" value="你" />
+      </div>
+      <div class="name-row">
+        <label>他的名字</label>
+        <input id="in-him" maxlength="12" placeholder="王子豪" value="王子豪" />
+      </div>
+      <p class="name-hint">（可以改成你自己的名字——这是你的学期。）</p>
+      <div class="name-actions">
+        <button class="tbtn primary" id="btn-name-ok">写好了，开始</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 结局 ================= -->
+  <section id="ending" class="screen">
+    <div class="end-bg" id="end-bg"></div>
+    <div class="end-card">
+      <div class="end-kicker" id="end-kicker">ENDING 01</div>
+      <h2 id="end-title">雪停之后</h2>
+      <p id="end-text"></p>
+      <div class="end-stats" id="end-stats"></div>
+      <div class="end-actions">
+        <button class="tbtn primary" id="end-title-btn">回到标题</button>
+        <button class="tbtn" id="end-gallery-btn">看看相册</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 覆盖层 ================= -->
+  <div class="overlay" id="overlay">
+    <div class="panel" id="panel-menu">
+      <h3>菜单</h3>
+      <div class="menu-grid">
+        <button class="mbtn" data-open="log">对话记录</button>
+        <button class="mbtn" data-open="save">存档 / 读档</button>
+        <button class="mbtn" data-open="gallery">相册</button>
+        <button class="mbtn" data-open="chars">人物</button>
+        <button class="mbtn" data-open="settings">设置</button>
+        <button class="mbtn danger" data-open="title">回到标题</button>
+      </div>
+      <div class="panel-foot"><button class="close-btn" data-close>关闭</button></div>
+    </div>
+    <div class="panel wide" id="panel-log">
+      <h3>对话记录</h3>
+      <div class="log-list" id="log-list"></div>
+      <div class="panel-foot"><button class="close-btn" data-close>关闭</button></div>
+    </div>
+    <div class="panel wide" id="panel-save">
+      <h3>存档 / 读档</h3>
+      <div class="save-grid" id="save-grid"></div>
+      <div class="panel-foot"><button class="close-btn" data-close>关闭</button></div>
+    </div>
+    <div class="panel wide" id="panel-gallery">
+      <h3>相册</h3>
+      <div class="tabs" id="gal-tabs">
+        <button class="tab active" data-tab="cg">CG</button>
+        <button class="tab" data-tab="campus">校园实景</button>
+        <button class="tab" data-tab="sticker">表情包</button>
+      </div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+      <div class="panel-foot"><button class="close-btn" data-close>关闭</button></div>
+    </div>
+    <div class="panel wide" id="panel-chars">
+      <h3>人物</h3>
+      <div class="chars-grid" id="chars-grid"></div>
+      <div class="panel-foot"><button class="close-btn" data-close>关闭</button></div>
+    </div>
+    <div class="panel" id="panel-settings">
+      <h3>设置</h3>
+      <div class="set-row"><label>文字速度</label><input type="range" id="set-speed" min="0" max="100" value="65"><span id="set-speed-v">65</span></div>
+      <div class="set-row"><label>自动播放间隔</label><input type="range" id="set-auto" min="400" max="4000" step="100" value="1600"><span id="set-auto-v">1.6s</span></div>
+      <div class="set-row"><label>背景音乐</label><input type="range" id="set-bgm" min="0" max="100" value="55"><span id="set-bgm-v">55</span></div>
+      <div class="set-row"><label>音效</label><input type="range" id="set-sfx" min="0" max="100" value="60"><span id="set-sfx-v">60</span></div>
+      <div class="set-row"><label>天气特效</label><input type="range" id="set-weather" min="0" max="100" value="100"><span id="set-weather-v">100</span></div>
+      <div class="set-row"><label>字号</label><input type="range" id="set-font" min="85" max="130" value="100"><span id="set-font-v">100%</span></div>
+      <div class="set-row"><label>全屏</label><button class="mbtn" id="btn-fullscreen">切换全屏</button></div>
+      <div class="panel-foot"><button class="close-btn" data-close>关闭</button></div>
+    </div>
+    <div class="panel wide" id="panel-cgview">
+      <div class="cgbig"><img id="cgbig-img" alt=""/><div class="cgbig-cap" id="cgbig-cap"></div></div>
+      <div class="panel-foot"><button class="close-btn" data-close>关闭</button></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script src="js/audio.js"></script>
+<script src="js/story.js"></script>
+<script src="js/engine.js"></script>
+</body>
+</html>
