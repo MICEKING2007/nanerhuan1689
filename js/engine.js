@@ -4,10 +4,10 @@
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
 
-  const LS_META = 'bl1689_meta_v2';
-  const LS_SAVE = 'bl1689_saves_v2';
-  const LS_AUTO = 'bl1689_auto_v2';
-  const LS_SET = 'bl1689_settings_v2';
+  const LS_META = 'bl1689_meta_v3';
+  const LS_SAVE = 'bl1689_saves_v3';
+  const LS_AUTO = 'bl1689_auto_v3';
+  const LS_SET = 'bl1689_settings_v3';
 
   // 他：真人抠图立绘（不同表情/姿势）
   const HIM = {
@@ -39,7 +39,7 @@
     choicesOpen: false,
   };
 
-  let meta = { endings: [], gallery: [], chars: [], cleared: 0, youName: '你', himName: '王子豪' };
+  let meta = { endings: [], gallery: [], chars: [], cleared: 0, youName: 'player', himName: 'player' };
   let settings = { speed: 65, auto: 1600, bgm: 55, sfx: 60, weather: 100, font: 100 };
   let saves = {};
 
@@ -48,7 +48,7 @@
     try { meta = Object.assign(meta, JSON.parse(localStorage.getItem(LS_META) || '{}')); } catch (e) {}
     try { settings = Object.assign(settings, JSON.parse(localStorage.getItem(LS_SET) || '{}')); } catch (e) {}
     try { saves = JSON.parse(localStorage.getItem(LS_SAVE) || '{}'); } catch (e) {}
-    if (window.STORY) { STORY.youName = meta.youName || '你'; STORY.himName = meta.himName || '王子豪'; }
+    if (window.STORY) { STORY.youName = meta.youName || 'player'; STORY.himName = meta.himName || 'player'; }
   }
   const saveMeta = () => { try { localStorage.setItem(LS_META, JSON.stringify(meta)); } catch (e) {} };
   const saveSettings = () => { try { localStorage.setItem(LS_SET, JSON.stringify(settings)); } catch (e) {} };
@@ -170,6 +170,11 @@
   function setSpeaker(id) { $('#him').classList.toggle('speaking', id === 'him'); }
 
   /* ---------------- 文本 ---------------- */
+  function names(txt) {
+    return String(txt)
+      .replace(/\{him\}/g, STORY.himName || 'player')
+      .replace(/\{you\}/g, STORY.youName || 'player');
+  }
   function fmt(txt) {
     return String(txt).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       .replace(/\[\[(.+?)\]\]/g, '<span class="em">$1</span>').replace(/\n/g, '<br>');
@@ -272,9 +277,9 @@
     $('#dlg-next').classList.remove('on');
     const body = $('#dlg-text');
     body.classList.toggle('nar', isNar);
-    S.history.push({ name, text, who });
+    S.history.push({ name, text: names(text), who });
     if (S.history.length > 500) S.history.shift();
-    typeOut(body, text, () => {
+    typeOut(body, names(text), () => {
       $('#dlg-next').classList.add('on');
       if (S.auto && !S.busy && !S.choicesOpen) {
         clearTimeout(S.timer);
@@ -322,13 +327,13 @@
     n.o.forEach((opt, k) => {
       const b = document.createElement('button');
       b.className = 'choice';
-      b.innerHTML = `<span class="cnum">${k + 1}</span>${fmt(opt.t)}${opt.h ? `<small>${fmt(opt.h)}</small>` : ''}`;
+      b.innerHTML = `<span class="cnum">${k + 1}</span>${fmt(names(opt.t))}${opt.h ? `<small>${fmt(names(opt.h))}</small>` : ''}`;
       b.onclick = (ev) => {
         ev.stopPropagation();
         if (window.Sfx) Sfx.page();
         box.classList.remove('on');
         S.choicesOpen = false;
-        S.history.push({ name: '选择', text: '→ ' + opt.t.replace(/\[\[|\]\]/g, ''), who: 'you' });
+        S.history.push({ name: '选择', text: '→ ' + names(opt.t).replace(/\[\[|\]\]/g, ''), who: 'you' });
         if (opt.l) addLove(opt.l);
         if (opt.set) Object.assign(S.flags, opt.set);
         if (opt.go && S.labels[opt.go] !== undefined) run(S.labels[opt.go]);
@@ -564,13 +569,13 @@
 
     $('#btn-start').onclick = () => {
       if (window.Music) { Music.unlock(); Music.play('daily'); }
-      $('#in-you').value = STORY.youName === '你' ? '' : STORY.youName;
-      $('#in-him').value = STORY.himName || '王子豪';
+      $('#in-you').value = STORY.youName || 'player';
+      $('#in-him').value = STORY.himName || 'player';
       showScreen('naming');
     };
     $('#btn-name-ok').onclick = () => {
-      const you = ($('#in-you').value || '').trim() || '你';
-      const him = ($('#in-him').value || '').trim() || '王子豪';
+      const you = ($('#in-you').value || '').trim() || 'player';
+      const him = ($('#in-him').value || '').trim() || 'player';
       STORY.youName = you; STORY.himName = him;
       meta.youName = you; meta.himName = him; saveMeta();
       $('#him-name').textContent = him;
